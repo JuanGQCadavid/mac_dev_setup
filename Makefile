@@ -1,6 +1,9 @@
 setup:
 	mkdir -p ~/.config/nvim  
 	cp -r * ~/.config/nvim
+
+profile:
+	echo "alias cdf='cd $(fd --type d | fzf)'" > .zrs.sdfsa
 	
 install:
 	brew install yaml-language-server
