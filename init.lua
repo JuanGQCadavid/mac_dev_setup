@@ -97,4 +97,11 @@ lspconfig.helm_ls.setup {
 }
 
 vim.cmd("colorscheme nord")
+vim.keymap.set("", "<Space>", "<Nop>")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show line diagnostics' })
 
+
+local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>t", builtin.find_files, { desc = "Find files" })
