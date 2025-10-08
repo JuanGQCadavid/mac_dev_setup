@@ -22,13 +22,36 @@ require("lazy").setup({
     end
   },
   
+{
+  "nvim-treesitter/nvim-treesitter",
+  build = ":TSUpdate",
+  config = function()
+    require("nvim-treesitter.configs").setup({
+      -- Enable highlighting
+      highlight = {
+        enable = true,
+      },
+      -- List of language parsers to install
+      ensure_installed = { "yaml", "go", "gotmpl" },
+    })
+  end,
+},
   {
-   "m4xshen/hardtime.nvim",
-   lazy = false,
-   dependencies = { "MunifTanjim/nui.nvim" },
-   opts = {},
+    "qvalentin/helm-ls.nvim",
+    ft = "helm",
+    opts = {
+      conceal_templates = {
+        -- enable the replacement of templates with virtual text of their current values
+        enabled = true, -- tree-sitter must be setup for this feature
+      },
+      indent_hints = {
+        -- enable hints for indent and nindent functions
+        enabled = true, -- tree-sitter must be setup for this feature
+      },
+    },
   },
-  
+  { "neovim/nvim-lspconfig", event = { "BufReadPre", "BufNewFile", "BufEnter" } },
+
   {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -60,6 +83,18 @@ require("lazy").setup({
   },
 
 })
+
+
+local lspconfig = require('lspconfig')
+lspconfig.helm_ls.setup {
+  settings = {
+    ['helm-ls'] = {
+      yamlls = {
+        path = "yaml-language-server",
+      },
+    },
+  },
+}
 
 vim.cmd("colorscheme nord")
 

@@ -3,6 +3,8 @@ setup:
 	cp -r * ~/.config/nvim
 	
 install:
+	brew install yaml-language-server
+	brew install helm-ls
 	brew install ripgrep
 	brew install fzf
 	brew install fd
