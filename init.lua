@@ -82,6 +82,25 @@ require("lazy").setup({
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
 
+  {
+  "akinsho/toggleterm.nvim",
+  version = "*",
+  config = true
+ },
+})
+
+
+require("toggleterm").setup({
+  -- The default direction, you can also have 'horizontal' or 'vertical'
+  direction = "float",
+
+  -- Other options you can configure
+  open_mapping = [[<C-\>]], -- The keybinding to open/close the terminal
+
+  -- Other useful settings
+  hide_numbers = true, -- Hide line numbers in the terminal
+  start_in_insert = true, -- Automatically start in insert mode
+  persist_size = true, -- Remember the size of your terminal split
 })
 
 
@@ -104,5 +123,10 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show line 
 
 
 local builtin = require("telescope.builtin")
+vim.keymap.set('n', '<leader>ss', function()
+  builtin.grep_string({ search = vim.fn.expand('%:p'), initial_mode = 'normal' })
+end, { desc = 'Search in current file' })
+
+vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Telescope find buffers' })
 vim.keymap.set("n", "<leader>g", builtin.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>t", builtin.find_files, { desc = "Find files" })
