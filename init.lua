@@ -104,4 +104,5 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show line 
 
 
 local builtin = require("telescope.builtin")
+vim.keymap.set("n", "<leader>g", builtin.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>t", builtin.find_files, { desc = "Find files" })
