@@ -7,6 +7,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- This is where you configure lazy.nvim and list your plugins
 require("lazy").setup({
+  -- For linting (diagnostics)
+  "mfussenegger/nvim-lint",
+  -- For formatting and autofixing
+  "stevearc/conform.nvim",
+
   -- Example: Install the "Telescope" fuzzy finder plugin
   "nvim-telescope/telescope.nvim",
 
@@ -130,3 +135,42 @@ end, { desc = 'Search in current file' })
 vim.keymap.set('n', '<leader>b', builtin.buffers, { desc = 'Telescope find buffers' })
 vim.keymap.set("n", "<leader>g", builtin.live_grep, { desc = "Live Grep" })
 vim.keymap.set("n", "<leader>t", builtin.find_files, { desc = "Find files" })
+
+
+-- For copying and paste across buffers and OS clipboard
+-- vim.opt.clipboard = "unnamedplus"
+vim.opt.clipboard = "unnamedplus"
+
+local lint = require("lint")
+
+lint.linters_by_ft = {
+  terraform = { "tflint" },
+  hcl = { "tflint" },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    lint.try_lint()
+  end,
+})
+
+local conform = require("conform")
+
+conform.setup({
+  formatters_by_ft = {
+    -- Use tffmt for formatting
+    terraform = { "terraform_fmt" },
+    hcl = { "terraform_fmt" },
+    -- You can add other formatters here for other languages
+    -- For example:
+    -- lua = { "stylua" },
+  },
+  -- Automatically format on save
+  format_on_save = {
+    -- This ensures that only the currently active formatter runs on save
+    -- and that it works for all filetypes
+    lsp_fallback = true,
+    async = false,
+    timeout_ms = 500,
+  },
+})

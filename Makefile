@@ -6,6 +6,7 @@ profile:
 	echo "alias cdf='cd $(fd --type d | fzf)'" > .zrs.sdfsa
 	
 install:
+	brew install tflint
 	brew install derailed/k9s/k9s
 	brew install yaml-language-server
 	brew install terraform-ls
